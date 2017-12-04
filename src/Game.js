@@ -55,6 +55,10 @@ export default class Game extends React.Component {
       return;
   }
 
+  moveForward() {
+    this.tick();
+  }
+
   stop() {
     clearInterval(this.state.gameInterval);
     this.setState({
@@ -115,6 +119,7 @@ export default class Game extends React.Component {
         <Button title="Reset" onPress={() => this.reset()} />
         <Button title="Play" onPress={() => this.play()} />
         <Button title="Stop" onPress={() => this.stop()} />
+        <Button title="Forward One" onPress={() => this.moveForward()} />
       </View>
     );
   }

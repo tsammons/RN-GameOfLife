@@ -14,12 +14,6 @@ export default class Grid extends React.Component {
         {this.props.grid.map((row, i) => 
             <View key={i} style={ styles.row }>
                 {row.map((value, j) => 
-                /*
-                    <Cell 
-                        key={`${i}-${j}`} 
-                        value={value} 
-                        onClick = {() => this.props.onClick(i, j)}
-                    /> */
                     <Cell_Color 
                         key={`${i}-${j}`} 
                         value={value} 
@@ -36,8 +30,7 @@ export default class Grid extends React.Component {
 var styles = StyleSheet.create({
     board: {
       padding: BOARD_PADDING,
-      //backgroundColor: '#6600ff', //'#bbaaaa',
-      //borderRadius: 5,
+      //backgroundColor: '#6600ff'
     },
     row: {
       flexDirection: 'row',
