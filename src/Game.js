@@ -67,25 +67,45 @@ export default class Game extends React.Component {
   }
 
   tick() {
+    let containsLife = 0;
+    let isTheSame = 1;
     let tempGrid = [];
+
     const current = this.state.grid.slice();
     for (var i = 0; i < this.state.gridHeight; i++) {
       let row = [];
       for (var j = 0; j < this.state.gridWidth; j++) {
+        let toPush = 0;
         let count = this.countNeighbors(i, j, current);
         if (count < 2 || count > 3)
-          row.push(0);
+          toPush = 0;
         if (count === 3)
-          row.push(1);
+          toPush = 1;
         if (count === 2)
-          row.push(current[i][j]);
+          toPush = current[i][j];
+
+        // decide to keep going or not
+        if (!containsLife) {
+          containsLife = toPush;
+        }
+        if (isTheSame) {
+          if (toPush !== current[i][j])
+            isTheSame = 0;
+        }
+        row.push(toPush);
       }
       tempGrid.push(row);
     }
 
     this.setState({
       grid: tempGrid,
-    })
+    });
+
+    if (!containsLife || isTheSame) {
+      this.stop();
+      this.reset();
+      this.play();
+    }
   }
 
   countNeighbors(row, col, current) {
@@ -116,10 +136,10 @@ export default class Game extends React.Component {
           grid = {current}
           onClick = {(i, j) => this.handleClick(i, j)}
         />
-        <Button title="Reset" onPress={() => this.reset()} />
-        <Button title="Play" onPress={() => this.play()} />
-        <Button title="Stop" onPress={() => this.stop()} />
-        <Button title="Forward One" onPress={() => this.moveForward()} />
+        <Button color="white" title="Reset" onPress={() => this.reset()} />
+        <Button color="white" title="Play" onPress={() => this.play()} />
+        <Button color="white" title="Stop" onPress={() => this.stop()} />
+        <Button color="white" title="Forward One" onPress={() => this.moveForward()} />
       </View>
     );
   }
